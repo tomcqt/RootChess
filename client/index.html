@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>RootChess</title>
+    <meta name="msapplication-TileColor" content="#181818" />
+    <meta name="theme-color" content="#181818" />
+
+    <link href="/style.css" rel="stylesheet" type="text/css" />
+
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?compat=recaptcha"></script>
+  </head>
+
+  <body>
+    <div id="fullscreenDiv">
+      <div
+        class="g-recaptcha"
+        data-sitekey="6Lf3fAQrAAAAAHA16QHwE18_MZU9Vc3Iex6jVW2G"
+      ></div>
+    </div>
+
+    <canvas id="minimapCanvas" style="z-index: -1"></canvas>
+    <canvas id="canvas" style="z-index: -2"></canvas>
+
+    <div class="chatContainer hidden">
+      <input
+        class="chat hidden"
+        type="text"
+        autocomplete="off"
+        spellcheck="false"
+        maxlength="64"
+        style="opacity: 0"
+      />
+      <!--placeholder="Type here to chat!"-->
+      <div class="chat-div"></div>
+      <div class="leaderboard-div"></div>
+    </div>
+
+    <script src="/constants.js"></script>
+    <script src="/input.js"></script>
+    <script src="/client.js"></script>
+    <script src="/networking.js"></script>
+    <script src="/inject.js"></script>
+  </body>
+</html>

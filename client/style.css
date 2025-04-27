@@ -1,0 +1,278 @@
+@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;700&display=swap");
+
+* {
+  -webkit-tap-highlight-color: transparent;
+  outline: 0;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+#canvas {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.centergui {
+  height: 60px;
+  justify-content: center;
+  width: 100%;
+  border-bottom-left-radius: 5px;
+}
+
+body {
+  margin: 0;
+}
+
+#toolMenu {
+  display: flex;
+}
+
+#toolMenu {
+  font-size: 17px;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  /* width: 100vw; */
+  /* width: calc(100vw - 300px); */
+  height: 61px;
+  /* padding: 5px; */
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.25);
+  user-select: none;
+  justify-content: left;
+  border-bottom-right-radius: 5px;
+  flex-wrap: wrap;
+  height: fit-content;
+}
+
+.centergui .submenu {
+  border-bottom-left-radius: 5px;
+}
+
+.menu-button-div {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+  color: white;
+  font-size: 0.8rem;
+  cursor: pointer;
+  margin: 15px;
+}
+
+.menu-button,
+.centergui .menu-button {
+  color: red;
+  border: none;
+  font-size: 2rem;
+}
+
+.all-gui {
+  width: 100%;
+  position: relative;
+}
+
+.selectedPlacable {
+  -webkit-box-shadow: 0px 0px 30px 0px rgba(173, 173, 173, 1);
+  -moz-box-shadow: 0px 0px 30px 0px rgba(173, 173, 173, 1);
+  box-shadow: 0px 0px 30px 0px rgba(173, 173, 173, 1);
+}
+
+#fullscreenDiv {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.hidden {
+  display: none;
+}
+
+#minimapCanvas {
+  position: absolute;
+  /* image-rendering: pixelated; */
+}
+
+.chat {
+  position: fixed;
+  left: -1px;
+  bottom: 0;
+  width: 365px;
+  /* height: 30px; */
+  transform-origin: center center;
+  border: none;
+  outline: none;
+  color: white;
+  padding: 2px;
+  caret-color: white;
+  background: rgba(34, 34, 34, 0.1);
+  border-radius: 3px;
+  font-weight: 900;
+  font-family: "Ubuntu", sans-serif;
+  font-size: 15px;
+  opacity: 0;
+  text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.8), 1px -1px 0 rgba(0, 0, 0, 0.8),
+    -1px 1px 0 rgba(0, 0, 0, 0.8), 1px 1px 0 rgba(0, 0, 0, 0.8);
+}
+
+.chat-div {
+  position: fixed;
+  left: -1px;
+  bottom: 2rem;
+  width: 365px;
+  height: 10rem;
+  display: flex;
+  flex-direction: column-reverse;
+  overflow-y: auto;
+  padding: 2px;
+  overflow-x: hidden;
+  background: rgba(0, 0, 0, 0);
+  font-weight: 900;
+  font-family: "Ubuntu", sans-serif;
+}
+
+.chat-message {
+  color: white;
+  font-size: 15px;
+  background: transparent;
+  padding: 0px;
+  margin: 0;
+  overflow-wrap: break-word;
+  width: 100%;
+  user-select: none;
+  text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.8), 1px -1px 0 rgba(0, 0, 0, 0.8),
+    -1px 1px 0 rgba(0, 0, 0, 0.8), 1px 1px 0 rgba(0, 0, 0, 0.8);
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 2px;
+}
+
+.leaderboard-div {
+  position: fixed;
+  left: calc(100% - 299px);
+  transition: left 0.2s linear, opacity 0.2s linear;
+  opacity: 1;
+  top: -1px;
+  width: 300px;
+  height: 100vh;
+  background: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.4));
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  flex-direction: column;
+  padding: 0px;
+  color: white;
+  overflow-y: auto;
+  overflow-x: hidden;
+  user-select: none;
+  font-family: "Ubuntu", sans-serif;
+}
+
+.hide {
+  left: 1600px !important;
+  opacity: 0;
+}
+
+.leaderboard-div::-webkit-scrollbar {
+  width: 10px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+}
+
+.leaderboard-div::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 2px;
+}
+
+.rainbow {
+  animation: colorRotate 4s linear 0s infinite;
+}
+
+@keyframes colorRotate {
+  0% {
+    color: hsl(180, 100%, 50%);
+  }
+  50% {
+    color: hsl(216, 100%, 50%);
+  }
+  100% {
+    color: hsl(180, 100%, 50%);
+  }
+}
+
+.lb-group {
+  background: transparent;
+  padding: 5px;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  flex-direction: column;
+  margin: 0px;
+  width: 300px;
+}
+
+.lb-name {
+  font-size: 1rem;
+  margin-bottom: 0.065rem;
+  margin-top: 0.2rem;
+  text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.8), 1px -1px 0 rgba(0, 0, 0, 0.8),
+    -1px 1px 0 rgba(0, 0, 0, 0.8), 1px 1px 0 rgba(0, 0, 0, 0.8);
+}
+
+.lb-players {
+  margin: 5px;
+  font-size: 0.9rem;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  flex-direction: column;
+
+  text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.6), 1px -1px 0 rgba(0, 0, 0, 0.6),
+    -1px 1px 0 rgba(0, 0, 0, 0.6), 1px 1px 0 rgba(0, 0, 0, 0.6);
+}
+
+.lb-players div {
+  margin: 1.5px;
+  cursor: pointer;
+  background: transparent;
+  padding: 0px;
+  transition: all 0.1s linear, padding 0.1s linear;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.lb-players div:hover {
+  background: rgba(255, 255, 255, 0.3);
+  padding: 6px;
+}
+
+.hideLB {
+  left: 100% !important;
+  opacity: 0;
+}
+
+.hideChat {
+  left: -175px !important;
+  opacity: 0;
+}
