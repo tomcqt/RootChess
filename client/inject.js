@@ -883,8 +883,8 @@ function bot_routine_king_defense() {
 const bot_clusteringThresholds = [Infinity, 3]; // next elements signals next layer of cluster needs filling based on total piece count outside cluster
 
 for (let i = 2; i < 100; i++) {
-  bot_clusteringThresholds.push((i ^ 2) - 1); // e.g. 2^2 - 1 = 3, 3^2 - 1 = 8, 4^2 - 1 = 15, etc.
-  // This means we expect to have at least i^2 - 1 pieces outside the cluster before moving to next layer
+  bot_clusteringThresholds.push(10 * i); // e.g. 20, 30, 40, ...
+  // This means we expect to have at least 10i pieces outside the cluster before moving to next layer
 }
 
 /**
@@ -1734,6 +1734,21 @@ function render() {
 
   ctx.fillStyle = colors[1];
 
+  // esp
+  for (let i = topLeft.x; i < bottomRight.x; i++) {
+    for (let j = topLeft.y; j < bottomRight.y; j++) {
+      if (unsafeSquares.includes(i + "-" + j)) {
+        ctx.fillStyle = (i + j) % 2 === 0 ? "#935151" : "#edd0d0";
+        ctx.fillRect(i * squareSize, j * squareSize, squareSize, squareSize);
+        ctx.fillStyle = colors[1];
+        continue;
+      }
+      if ((i + j) % 2 === 0) {
+        ctx.fillRect(i * squareSize, j * squareSize, squareSize, squareSize);
+      }
+    }
+  }
+
   for (let i = topLeft.x; i < bottomRight.x; i++) {
     for (let j = topLeft.y; j < bottomRight.y; j++) {
       if ((i + j) % 2 === 0) {
@@ -1995,3 +2010,53 @@ function render() {
     drawButtons();
   }
 }
+
+// extra esp code
+const premoves = [];
+
+const unsafeSquares = [];
+const calculateUnsafeSquares = () => {
+  const checkBoard = structuredClone(board);
+  for (let x = 0; x < checkBoard.length; x++) {
+    for (let y = 0; y < checkBoard[x].length; y++) {
+      if (checkBoard[x][y] === 6 && teams[x][y] === selfId)
+        checkBoard[x][y] = 0;
+    }
+  }
+
+  unsafeSquares.length = 0;
+  for (let x = 0; x < board.length; x++) {
+    for (let y = 0; y < board[x].length; y++) {
+      if (teams[x][y] === 0 || teams[x][y] === selfId) continue;
+      const legalMoves = generateLegalMoves(x, y, checkBoard, teams);
+      for (const move of legalMoves) {
+        if (unsafeSquares.includes(move[0] + "-" + move[1])) continue;
+        unsafeSquares.push(move[0] + "-" + move[1]);
+      }
+      if (board[x][y] === 1) {
+        if (!unsafeSquares.includes(x - 1 + "-" + y - 1))
+          unsafeSquares.push(x - 1 + "-" + y - 1);
+        if (!unsafeSquares.includes(x - 1 + "-" + y + 1))
+          unsafeSquares.push(x - 1 + "-" + y + 1);
+        if (!unsafeSquares.includes(x + 1 + "-" + y - 1))
+          unsafeSquares.push(x + 1 + "-" + y - 1);
+        if (!unsafeSquares.includes(x + 1 + "-" + y + 1))
+          unsafeSquares.push(x + 1 + "-" + y + 1);
+      }
+    }
+  }
+  console.log(
+    `[esp_calculate] Unsafe squares calculated: ${unsafeSquares.length}`
+  );
+};
+
+ws.addEventListener("message", (event) => {
+  const msg = new Uint16Array(event.data);
+  if (msg[0] === 64535 && msg[1] === 12345) return calculateUnsafeSquares();
+  if (msg.byteLength === 8) {
+    calculateUnsafeSquares();
+  }
+  if (msg.byteLength === 10) {
+    calculateUnsafeSquares();
+  }
+});
